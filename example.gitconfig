@@ -1,0 +1,77 @@
+
+[user]
+    name = Mick Knutson
+    email = mickknutson@gmail.com
+
+[color]
+	ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+
+[color "status"]
+  changed = yellow
+  added = green
+  untracked = red
+  
+[apply]
+    whitespace = nowarn
+
+[alias]
+    br = branch
+    cm = !git add -A && git commit -m
+    co = checkout
+    com = checkout main
+
+    difflast = diff --cached HEAD^
+    last = log -1 HEAD
+    ll = log --oneline --graph --decorate --all
+    la = log --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --numstat
+    st = status
+    undo = reset --soft HEAD~1
+    unstage = reset HEAD --
+    editconflicted = "!f() {git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR 'f'"
+    addconflicted = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add 'f'"
+
+[commit]
+#    template = /Users/mickknutson/Documents/SYNCH/configs/scripts/GIT/stCommitMsg.txt
+#    template = /SOME_REMOTE_SHARE_DRIVE/scripts/GIT/stCommitMsg.txt
+    template = /Users/mickknutson/.stCommitMsg
+
+[branch]
+    autosetuprebase = always
+
+[core]
+    autocrlf = input
+    excludesfile = /Users/mickknutson/Documents/SYNCH/configs/scripts/GIT/gitignore_global.txt
+	editor = subl -n -w
+
+# Another option:
+# git config --global core.editor "'/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' -n -w"
+
+
+[diff]
+    tool = diffmerge
+    #tool = bc4
+    #tool = kdiff3
+
+[difftool]
+    prompt = false
+
+
+[merge]
+	tool = diffmerge
+    #tool = bc4
+    #tool = kdiff3
+
+[mergetool "diffmerge"]
+    cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
+    trustExitCode = true
+
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
